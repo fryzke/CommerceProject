@@ -45,4 +45,15 @@ public class Customer {
         this.totalPurchase = totalPurchase;
     }
 
+    private void updateGrade() {
+        if (totalPurchase >= 2000000) {
+            this.rank = "플래티넘";
+        } else if (totalPurchase >= 1000000) {
+            this.rank = "골드";
+        } else if (totalPurchase >= 500000) {
+            this.rank = "실버";
+        } else {
+            this.rank = "브론즈";
+        }
+    }
 }
