@@ -8,10 +8,10 @@ public class ProductRepository {
     public static List<Category> getAllCategories() {
         // 1. 전자제품 데이터 생성
         List<Product> eProducts = new ArrayList<>();
-        eProducts.add(new Product("Galaxy S25", 1200000, "최신 안드로이드 스마트폰", 1));
-        eProducts.add(new Product("iPhone 16", 1350000, "Apple의 최신 스마트폰", 1));
-        eProducts.add(new Product("MacBook Pro", 2400000, "M3 칩셋이 탑재된 노트북", 1));
-        eProducts.add(new Product("AirPods pro", 350000, "노이즈 캔슬링 무선 이어폰", 1));
+        eProducts.add(new Product("Galaxy S25", 1200000, "최신 안드로이드 스마트폰", 10));
+        eProducts.add(new Product("iPhone 16", 1350000, "Apple의 최신 스마트폰", 20));
+        eProducts.add(new Product("MacBook Pro", 2400000, "M3 칩셋이 탑재된 노트북", 26));
+        eProducts.add(new Product("AirPods pro", 350000, "노이즈 캔슬링 무선 이어폰", 34));
 
         // 2. 의류 데이터 생성
         List<Product> cProducts = new ArrayList<>();
