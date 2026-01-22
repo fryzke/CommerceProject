@@ -1,3 +1,4 @@
+import com.example.commerce.CommerceSystem;
 import com.example.commerce.Product;
 
 import java.util.ArrayList;
@@ -6,7 +7,6 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
         //상품목록 생성
         Product p1 = new Product("Galaxy S25", 1200000, "최신 안드로이드 스마트폰", 1);
         Product p2 = new Product("iPhone 16", 1350000, "Apple의 최신 스마트폰", 1);
@@ -20,27 +20,10 @@ public class Main {
         products.add(p3);
         products.add(p4);
 
-        int cmd = 1;
+        //Commerce System Start
 
-        while(cmd != 0) {
-            System.out.println("[ 실시간 커머스 플랫폼 - 전자제품]");
-            for (int i=0; i< products.size(); i++) {
-                Product p = products.get(i);
-                //formatted 출력으로 형식 맞추기
-                System.out.printf("%d. %-15s | %,10d원 | %s%n",
-                        i,
-                        p.getProductName(),
-                        p.getPrice(),
-                        p.getDetails());
-            }
-            System.out.printf("%d. %-13s | %s%n", 0, "종료", "프로그램 종료");
+        CommerceSystem cs = new CommerceSystem(products);
+        cs.start();
 
-            cmd = sc.nextInt();
-
-            if(cmd == 0) {
-                System.out.println("커머스 플랫폼을 종료합니다.");
-            }
-        }
-        sc.close();
     }
 }
