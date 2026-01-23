@@ -45,9 +45,9 @@ public class CommerceSystem {
             if(cmd == 0) {
                 System.out.println("커머스 플랫폼을 종료합니다.");
             }else if(cmd>0 && cmd<=categories.size()) {
-                 processCategory(sc, cmd, categories, cart);
+                 processCart(sc, cmd, categories, cart);
             }else if(!isEmpty && cmd == categories.size()+1){
-                processCart(sc,cart);
+                processPurchase(sc,cart);
             }else if(!isEmpty && cmd == categories.size() +2){
                 processCancelCart(sc, cart);
             }else {
@@ -57,7 +57,7 @@ public class CommerceSystem {
         sc.close();
     }
 
-    public void processCategory (Scanner sc, int category, List<Category> categories, Cart cart){
+    public void processCart(Scanner sc, int category, List<Category> categories, Cart cart){
         int idx = category -1;
         System.out.printf("[ %s 카테고리 ]%n", categories.get(idx).getCategoryName());
         for (int j=0; j< categories.get(idx).getProductList().size(); j++) {
@@ -108,7 +108,7 @@ public class CommerceSystem {
         }
     }
 
-    public void processCart(Scanner sc, Cart cart){
+    public void processPurchase(Scanner sc, Cart cart){
         List<CartItem> c = cart.getCartList();
         int totalPrice = cart.getTotalPrice();
         System.out.println("아래와 같이 주문 하시겠습니까?");
