@@ -7,13 +7,11 @@ public class StockManager {
     }
 
     //재고 감소
-    public static boolean reduceStock(Product p, int quantity){
+    public static void reduceStock(Product p, int quantity){
         if(isAvailable(p, quantity)){
             p.setStock(p.getStock() - quantity);
-            return true;
         } else {
             System.out.println("재고가 부족합니다.");
-            return false;
         }
     }
     //재고 보충
