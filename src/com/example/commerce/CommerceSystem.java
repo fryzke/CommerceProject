@@ -41,6 +41,7 @@ public class CommerceSystem {
                sc.nextLine();
                continue;
            }
+            sc.nextLine();
 
             if(cmd == 0) {
                 System.out.println("커머스 플랫폼을 종료합니다.");
@@ -77,6 +78,7 @@ public class CommerceSystem {
             System.out.println("올바르지 않은 입력입니다. 숫자를 입력해주세요.");
             sc.nextLine(); //잘못 입력된 값을 버퍼에서 제거
         }
+        sc.nextLine();
         if(product == 0) {
             product = -1;
         }else if(product > 0 && product <= categories.get(idx).getProductList().size()){
@@ -93,6 +95,7 @@ public class CommerceSystem {
             System.out.println("위 상품을 장바구니에 추가하시겠습니까?");
             System.out.printf("1. %-15s 2. %s%n", "확인", "취소");
             product = sc.nextInt();
+            sc.nextLine();
             if(product == 1){
                 System.out.println("담을 수량을 입력해 주세요.");
                 product = sc.nextInt();
@@ -129,9 +132,14 @@ public class CommerceSystem {
         System.out.println();
         System.out.printf("1. %-15s 2. %s%n", "주문 확정", "메인으로 돌아가기");
         int cmd = sc.nextInt();
+        sc.nextLine();
 
         if(cmd == 1){
             System.out.printf("주문이 완료되었습니다! 총 금액: %,10d원%n", totalPrice);
+            for (CartItem cartItem : c) {
+                Product p = cartItem.getProduct();
+                StockManager.reduceStock(p, cartItem.getQuantity());
+            }
             cart.deleteAllItem();
 
         }else if(cmd != 2){
@@ -158,11 +166,9 @@ public class CommerceSystem {
 
         System.out.printf("1. %-15s 2. %s%n", "주문 삭제", "메인으로 돌아가기");
         int cmd = sc.nextInt();
+        sc.nextLine();
         if(cmd == 1){
             System.out.println("장바구니가 비워졌습니다.");
-            for (CartItem item : c) {
-                StockManager.addStock(item.getProduct(), item.getQuantity());
-            }
             cart.deleteAllItem();
 
         }else if(cmd != 2){
