@@ -9,7 +9,9 @@ public class StockManager {
     //재고 감소
     public static void reduceStock(Product p, int quantity){
         if(isAvailable(p, quantity)){
-            p.setStock(p.getStock() - quantity);
+            int currentStock = p.getStock();
+            p.setStock(currentStock - quantity);
+            System.out.printf("%s 재고가 %d개 -> %d개로 업데이트되었습니다.%n", p.getProductName(), currentStock, p.getStock());
         } else {
             System.out.println("재고가 부족합니다.");
         }

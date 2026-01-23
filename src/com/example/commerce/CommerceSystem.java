@@ -4,6 +4,8 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import static com.example.commerce.Constants.*;
+
 
 public class CommerceSystem {
     private List<Category> categories;
@@ -15,6 +17,8 @@ public class CommerceSystem {
     public void start () {
         Scanner sc = new Scanner(System.in);
         Cart cart = new Cart();
+        Admin admin = new Admin("admin123");
+
         int cmd = -1;
 
         while(cmd != 0) {
@@ -32,7 +36,7 @@ public class CommerceSystem {
                 System.out.printf("%d. %-15s | %s%n", categories.size()+1, "장바구니 확인", "장바구니를 확인 후 주문합니다.");
                 System.out.printf("%d. %-15s | %s%n", categories.size()+2, "주문 취소", "진행중인 주문을 취소합니다.");
             }
-
+            System.out.printf("%d. 관리자 모드%n", categories.size()+3);
             try{
                cmd = sc.nextInt();
 
@@ -42,16 +46,17 @@ public class CommerceSystem {
                continue;
            }
             sc.nextLine();
-
             if(cmd == 0) {
                 System.out.println("커머스 플랫폼을 종료합니다.");
             }else if(cmd>0 && cmd<=categories.size()) {
                  processCart(sc, cmd, categories, cart);
             }else if(!isEmpty && cmd == categories.size()+1){
                 processPurchase(sc,cart);
-            }else if(!isEmpty && cmd == categories.size() +2){
+            }else if(!isEmpty && cmd == categories.size()+2){
                 processCancelCart(sc, cart);
-            }else {
+            }else if(cmd == categories.size()+3){
+                processAdmin(sc, admin);
+            } else {
                 System.out.println("범위 안 숫자를 입력해주세요.");
             }
         }
@@ -133,7 +138,6 @@ public class CommerceSystem {
         System.out.printf("1. %-15s 2. %s%n", "주문 확정", "메인으로 돌아가기");
         int cmd = sc.nextInt();
         sc.nextLine();
-
         if(cmd == 1){
             System.out.printf("주문이 완료되었습니다! 총 금액: %,10d원%n", totalPrice);
             for (CartItem cartItem : c) {
@@ -174,6 +178,41 @@ public class CommerceSystem {
         }else if(cmd != 2){
             System.out.println("범위 안 숫자를 입력해주세요.");
             sc.nextLine();
+        }
+    }
+
+    public void processAdmin (Scanner sc, Admin admin) {
+        if(admin.getPassword() == null){
+            System.out.println("비밀번호를 설정해주세요.");
+            String password = sc.nextLine();
+            admin.setPassword(password);
+            sc.nextLine();
+        }
+        int failCount = 0;
+        boolean isAuthenticated = false;
+
+        while (failCount < 3) {
+            System.out.print("관리자 비밀번호를 입력해주세요: ");
+            String pwd = sc.nextLine();
+
+            if (pwd.equals(admin.getPassword())) {
+                isAuthenticated = true;
+                break; // 맞추면 루프 탈출
+            } else {
+                failCount++;
+                if (failCount < 3) {
+                    System.out.printf("비밀번호가 틀렸습니다. (남은 기회: %d회)%n", 3 - failCount);
+                }
+            }
+        }
+
+        if(!isAuthenticated){
+            System.out.println("비밀번호를 3회 틀렸습니다. 메인 화면으로 돌아갑니다.");
+        }else {
+            System.out.println("[ 관리자 모드 ]");
+            for(int i=0; i<ADMIN_MENU.getNum(); i++ ){
+                System.out.printf("%d. %s%n", i+1, ADMIN_MENU.getList().get(i));
+            }
         }
     }
 }
